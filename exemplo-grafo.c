@@ -83,6 +83,9 @@ int main(){
     int V = 5;
     struct Graph* graph = createGraph(V);
     addEdge(graph, 0, 1);
+    addEdge(graph, 1, 0);
+    addEdge(graph, 1, 0);
+    addEdge(graph, 1, 0);
     addEdge(graph, 0, 4);
     addEdge(graph, 1, 2);
     addEdge(graph, 1, 3);
