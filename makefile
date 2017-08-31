@@ -1,12 +1,15 @@
 all:programa clean
-programa:main.o grafo.o
-	gcc main.o grafo.o -Wall -o programa
+programa:main.o grafo.o OrganizaArquivo.o
+	gcc main.o grafo.o OrganizaArquivo.o -Wall -o programa
 
-main.o:main.c grafo.c grafo.h
+main.o:main.c grafo.c grafo.h OrganizaArquivo.c OrganizaArquivo.h
 	gcc -c main.c
 
 grafo.o:grafo.c grafo.h
 	gcc -c grafo.c
+
+OrganizaArquivo.o:OrganizaArquivo.c OrganizaArquivo.h
+	gcc -c OrganizaArquivo.c
 
 clean:
 	rm -rf *.o

@@ -1,4 +1,5 @@
 #include "grafo.h"
+#include "OrganizaArquivo.h"
 #include <stdio.h>
 
 int main(){

@@ -99,6 +99,7 @@ int InsereAresta(Vertice *v1,Vertice *v2,listaVertices *grafo){ //Insere uma Are
 	}
 	if(!ExisteAdjacente(v1,v2,grafo)){
 		InsereAdjacente(v2,v1,grafo);
+		InsereAdjacente(v1,v2,grafo);
 	}
 	return 1;
 }
@@ -188,12 +189,46 @@ void imprimirgrafo(listaVertices *grafo){
     }
 }
 
+int MedirGrau(Vertice *v,listaVertices *grafo){ //Mede o grau de um vertice no grafo
+	elemento_vertice* busca = grafo->primeiro;
+
+	while((busca!=NULL)&&(v != busca->vertice)){
+		busca = busca->proximo;
+	}
+	if((busca != NULL)&&(busca->vertice == v)){
+		elemento_adjacente* k = busca->primeiroAdj;
+		int grauvertice = 0;
+
+		while(k!=NULL){
+			grauvertice++;
+			k = k->proximo;
+		}
+		return grauvertice;
+	}
+	return -1;
+}
+/*
+listaVertices getCliqueMaximal(listaVertices *grafo){
+	Vertice* v = grafo->primeiro->vertice;
+	listaVertices *R = CriarLista();
+	elemento_vertice* buscaclique = grafo->primeiro;
+	elemento_adjacente* P = buscaclique->primeiroAdj;
+	elemento_vertice* X;
+	int achou = 0;
+
+	while(achou != 1){
+		InsereVertice(v,R);
+		
+		if(){
+
+		}
+	}
+
+	
+}
+*/
 /*
 Vertice getVertice(listaVertices *grafo){ //pega um vertice dentro da lista de vertices do grafo
-
-}
-
-int MedirGrau(Vertice *v,listaVertices *grafo){ //Mede o grau de um vertice no grafo
 
 }
 

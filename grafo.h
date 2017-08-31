@@ -43,11 +43,10 @@ int ListaAdjVazia(Vertice *v,listaVertices *grafo); //Verifica se a lista de ver
 void ExcluirGrafo(listaVertices *grafo);//exclui o grafo
 void RemoverAresta(Vertice *v1,Vertice *v2,listaVertices *grafo); //remove uma aresta (v1,v2) no grafo
 void imprimirgrafo(listaVertices *grafo); //imprime os valores do grafo na tela
+int MedirGrau(Vertice *v,listaVertices *grafo); //Mede o grau de um vertice no grafo
 
 /*
 Vertice getVertice(listaVertices *grafo); //pega um vertice dentro da lista de vertices do grafo
-
-int MedirGrau(Vertice *v,listaVertices *grafo); //Mede o grau de um vertice no grafo
 
 listaVertices getCliqueMaximo(listaVertices *grafo);
 
