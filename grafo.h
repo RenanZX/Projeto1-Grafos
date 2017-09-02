@@ -4,11 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct Vertice{ //Vertice do grafo
-	char nome[100];
-	int matricula;
-}Vertice;
-
 typedef struct ElementoAdjacente
 {
 	struct Elemento * adjacente;
@@ -17,7 +12,9 @@ typedef struct ElementoAdjacente
 
 typedef struct Elemento //Elemento da lista de vertices contendo o ponteiro para o conteúdo do vertice e os outros elementos do grafo
 {
-	Vertice * vertice;
+	char nome[1000];
+	int matricula;
+	int nroadjacentes;
 	struct Elemento * proximo;
 	struct ElementoAdjacente * primeiroAdj;
 	struct ElementoAdjacente * ultimoAdj;
@@ -30,27 +27,27 @@ typedef struct listav //lista de vertices do grafo
 }listaVertices;
 
 listaVertices* CriarLista(); //cria e retorna um grafo
-void InsereVertice(Vertice *v,listaVertices *grafo); //Insere Vertices na lista do grafo
-void InsereAdjacente(Vertice* novoadjacente,Vertice* vertice,listaVertices* listav); //insere um novo elemento adjacente no vertice
+void InsereVertice(char * nome,int matricula,listaVertices *grafo); //Insere Vertices na lista do grafo
+void InsereAdjacente(int novoadjacentemat,int verticemat,listaVertices* listav); //tendo duas matriculas insere um novo elemento adjacente no vertice
 /*void BuscarVertice(Vertice vertice,listaVertices *grafo); //Busca um vertice no grafo
 */
-int ExisteVertice(Vertice* v,listaVertices *grafo); //verifica a existencia de vertices no grafo
-int ExisteAdjacente(Vertice* v1,Vertice* adjacente,listaVertices *grafo); //verifica a existencia de adjacentes no vertice v no grafo
-int CompararVertices(Vertice *v1,Vertice *v2); // compara dois vertices e retorna 1 caso sejam iguais e 0 caso contrario
-int InsereAresta(Vertice *v1,Vertice *v2,listaVertices *grafo); //Insere uma Aresta do vertice V1 para V2 no grafo
+int ExisteVertice(int mat,listaVertices *grafo); //verifica a existencia de vertices apartir da matricula do aluno no grafo
+int ExisteAdjacente(int v1,int adjacente,listaVertices *grafo); //verifica a existencia de adjacentes no vertice com matricula v no grafo
+int InsereAresta(int v1mat,int v2mat,listaVertices *grafo); //Insere uma Aresta do vertice V1 para V2 no grafo
 int ListaVazia(listaVertices *grafo); //Verifica se a lista de vertices está vazia
-int ListaAdjVazia(Vertice *v,listaVertices *grafo); //Verifica se a lista de vertices adjacentes em relação a v no grafo está vazia
+int ListaAdjVazia(int v,listaVertices *grafo); //Verifica se a lista de vertices adjacentes em relação a v no grafo está vazia
 void ExcluirGrafo(listaVertices *grafo);//exclui o grafo
-void RemoverAresta(Vertice *v1,Vertice *v2,listaVertices *grafo); //remove uma aresta (v1,v2) no grafo
+void RemoverAresta(int v1,int v2,listaVertices *grafo); //remove uma aresta (v1,v2) no grafo
+void RemoveVertice(int v1,listaVertices* l); //remove um vertice do grafo
 void imprimirgrafo(listaVertices *grafo); //imprime os valores do grafo na tela
-int MedirGrau(Vertice *v,listaVertices *grafo); //Mede o grau de um vertice no grafo
-
-/*
+int MedirGrau(int v,listaVertices *grafo); //Mede o grau de um vertice no grafo
+listaVertices* getCliqueMaximal(listaVertices *grafo,int nrovertices);
+/*listaVertices* Unirlistas(listaVertices* l1,listaVertices *l2);
+listaVertices* Interseccionarlistas(listaVertices* l1,listaVertices* l2);
+listaVertices* BronKerbosch(listaVertices* P,listaVertices *R,listaVertices *X);
 Vertice getVertice(listaVertices *grafo); //pega um vertice dentro da lista de vertices do grafo
 
 listaVertices getCliqueMaximo(listaVertices *grafo);
-
-listaVertices getCliqueMaximal(listaVertices *grafo);
 */
 
 #endif
