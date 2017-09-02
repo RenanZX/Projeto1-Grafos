@@ -2,10 +2,13 @@
 #define _H_ORGANIZAARQUIVO
 
 #include "grafo.h"
+
+
+void LerRegistros();
 /*
-listaVertices LerRegistros(string caminhoArquivo);//a implementar
 void ImprimirGrafoGrauDecrescente();//a implementar
 void ImprimirCliqueMaximal()//a implementar
 void ImprimirCliqueMaximo();//a implementar
 */
+
 #endif
