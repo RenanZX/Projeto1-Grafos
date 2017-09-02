@@ -65,7 +65,7 @@ void InsereAdjacente(int novoadjacentemat,int verticemat,listaVertices* listav){
 	if(vert->primeiroAdj == NULL){
 		vert->primeiroAdj = novoelementoadjv2;
 	}
-	ptr->nroadjacentes++;
+	vert->nroadjacentes++;
 }
 
 /*void BuscarVertice(Vertice vertice,listaVertices *grafo){ //Busca um vertice no grafo
@@ -199,43 +199,7 @@ void imprimirgrafo(listaVertices *grafo){
       d = d->proximo;
     }
 }
-/*
-listaVertices* Unirlistas(listaVertices* l1,listaVertices *l2){
-	elemento_vertice *vl1 = l1->primeiro;
-	elemento_vertice *vl2 = l2->primeiro;
-	listaVertices* aux = CriarLista();
 
-	while(vl1!=NULL){
-		while(vl2!=NULL){
-			if(CompararVertices(vl1->vertice,vl2->vertice)==0){
-				InsereVertice(vl2->vertice,aux);
-			}
-			vl2 = vl2->proximo;
-		}
-		vl1 = vl1->proximo;
-	}
-	l1->ultimo->proximo = aux->primeiro;
-	l1->ultimo = aux->ultimo;
-	return l1;
-}
-
-listaVertices* Interseccionarlistas(listaVertices* l1,listaVertices* l2){
-	elemento_vertice *vl1 = l1->primeiro;
-	elemento_vertice *vl2 = l2->primeiro;
-	listaVertices* aux = CriarLista();
-
-	while(vl1!=NULL){
-		while(vl2!=NULL){
-			if(CompararVertices(vl1->vertice,vl2->vertice)==1){
-				InsereVertice(vl2->vertice,aux);
-			}
-			vl2 = vl2->proximo;
-		}
-		vl1 = vl1->proximo;
-	}
-	return aux;
-}
-*/
 void RemoveVertice(int v1,listaVertices* l){
 	elemento_vertice* k = l->primeiro;
 	elemento_adjacente* adj;
@@ -269,19 +233,6 @@ void RemoveVertice(int v1,listaVertices* l){
 		k = NULL;
 	}
 }
-
-/*
-listaVertices* BronKerbosch(listaVertices* P,listaVertices *R,listaVertices *X){
-	if((P==NULL)&&(X==NULL)){
-		return R;
-	}
-	elemento_vertice *v = P->primeiro;
-	while(v!=NULL){
-
-		InsereVertice(v->vertice,X);
-		v = v->proximo;
-	}
-}*/
 
 int MedirGrau(int v,listaVertices *grafo){ //Mede o grau de um vertice no grafo
 	elemento_vertice* busca = grafo->primeiro;
@@ -320,13 +271,15 @@ listaVertices *getCliqueMaximal(listaVertices *grafo,int nrovertices){
 	elemento_vertice* v2;
 
 	while((k!=NULL)&&(achou!=1)){
-		if(k->nroadjacentes == (nrovertices-1)){
+		if(k->nroadjacentes >= (nrovertices-1)){
+			counter = nrovertices-1;
 			adj = k->primeiroAdj;
-			while((adj!=NULL)&&(achou!=-1)){
+			while((adj!=NULL)&&((achou!=-1)&&(counter<=0))){
 				if(adj->adjacente->nroadjacentes < (nrovertices-1)){
 					achou = -1;
 				}
 				adj = adj->proximo;
+				counter--;
 			}
 			if(achou!=-1){
 				achou = 1;
@@ -336,6 +289,7 @@ listaVertices *getCliqueMaximal(listaVertices *grafo,int nrovertices){
 			k = k->proximo;
 		}
 	}
+
 
 	if(achou == 1){
 		achou = 0;
@@ -348,7 +302,7 @@ listaVertices *getCliqueMaximal(listaVertices *grafo,int nrovertices){
 			while((adj->proximo!=NULL)&&(achou!=-1)){
 				v2 = adj->proximo->adjacente;
 				verificarcombinacao = v1->primeiroAdj;
-				while((verificarcombinacao!=NULL)&&(achou!=1)){
+				while((verificarcombinacao->proximo!=NULL)&&(achou!=1)){
 					if(v2->matricula == verificarcombinacao->adjacente->matricula){
 						achou = 1;
 					}
@@ -359,12 +313,13 @@ listaVertices *getCliqueMaximal(listaVertices *grafo,int nrovertices){
 				}
 				adj = adj->proximo;
 			}
+			InsereVertice(v1->nome,v1->matricula,lret);
 			verificadj = verificadj->proximo;
 			adj = verificadj;
 			v1 = adj->adjacente;
-			InsereVertice(v1->nome,v1->matricula,lret);
 			counter--;
 		}
+		InsereVertice(v1->nome,v1->matricula,lret);
 
 		if(achou == -1){
 			return NULL;

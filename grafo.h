@@ -42,9 +42,7 @@ void RemoveVertice(int v1,listaVertices* l); //remove um vertice do grafo
 void imprimirgrafo(listaVertices *grafo); //imprime os valores do grafo na tela
 int MedirGrau(int v,listaVertices *grafo); //Mede o grau de um vertice no grafo
 listaVertices* getCliqueMaximal(listaVertices *grafo,int nrovertices);
-/*listaVertices* Unirlistas(listaVertices* l1,listaVertices *l2);
-listaVertices* Interseccionarlistas(listaVertices* l1,listaVertices* l2);
-listaVertices* BronKerbosch(listaVertices* P,listaVertices *R,listaVertices *X);
+/*
 Vertice getVertice(listaVertices *grafo); //pega um vertice dentro da lista de vertices do grafo
 
 listaVertices getCliqueMaximo(listaVertices *grafo);
