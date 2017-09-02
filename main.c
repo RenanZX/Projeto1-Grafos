@@ -28,5 +28,9 @@ int main(){
 	if(ListaVazia(grafo) == 1){
 		printf("grafo vazio\n");
 	}
+
+	
+	LerRegistros();
+
 	return 0;
 }
