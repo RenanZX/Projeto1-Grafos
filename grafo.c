@@ -241,13 +241,7 @@ int MedirGrau(int v,listaVertices *grafo){ //Mede o grau de um vertice no grafo
 		busca = busca->proximo;
 	}
 	if((busca != NULL)&&(busca->matricula == v)){
-		elemento_adjacente* k = busca->primeiroAdj;
-		int grauvertice = 0;
-
-		while(k!=NULL){
-			grauvertice++;
-			k = k->proximo;
-		}
+		int grauvertice = busca->nroadjacentes;
 		return grauvertice;
 	}
 	return -1;
