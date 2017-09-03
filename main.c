@@ -29,8 +29,9 @@ int main(){
 		printf("grafo vazio\n");
 	}
 
-	
-	LerRegistros();
+	 Aluno* aluno = malloc(sizeof(Aluno)*50);  /* quantidade de aluno total. */
+	LerRegistros(aluno);
+	printf("nome = %s", aluno[22].nome);
 
 	return 0;
 }
