@@ -285,6 +285,8 @@ listaVertices *getCliqueMaximal(listaVertices *grafo,int nrovertices){
 		return lret;
 	}
 
+	nrovertices = nrovertices-1;
+
 	elemento_vertice* k = grafo->primeiro;
 	elemento_adjacente* adj;
 	elemento_adjacente* verificarcombinacao;

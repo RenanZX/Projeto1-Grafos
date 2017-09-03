@@ -23,8 +23,8 @@ int main(){
 	InsereAresta(3,5,grafo);
 	InsereAresta(4,5,grafo);
 	InsereAresta(5,6,grafo);
-	//listaVertices* gr = getCliqueMaximal(grafo,5);
-	//imprimirgrafo(gr);
+	listaVertices* gr = getCliqueMaximal(grafo,3);
+	imprimirgrafo(gr);
 	//RemoveVertice(6,grafo);
 	//imprimirgrafo(grafo);
 	printf("vertice removido\n");
