@@ -10,6 +10,7 @@ typedef struct {
 }Aluno;
 
 Aluno* LerRegistros(Aluno* aluno);
+
 listaVertices* InsereVerticesLidos(listaVertices* grafo);
 /*
 void ImprimirGrafoGrauDecrescente();//a implementar
