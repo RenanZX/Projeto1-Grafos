@@ -13,5 +13,5 @@ Consiste em criar um programa com a lista de pessoas da sala dentro de um grafo
 
 ### Uso
 1. Vá até a pasta onde você compilou o programa
-2. Digite ./programa para executá-lo
+2. Digite ./Projeto1 para executá-lo
 3. Seja Feliz
