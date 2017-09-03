@@ -315,11 +315,13 @@ listaVertices *getCliqueMaximal(listaVertices *grafo,int nrovertices){
 
 	if(achou == 1){
 		achou = 0;
+		int counteradj = 0;
 		InsereVertice(k->nome,k->matricula,lret);
 		adj = k->primeiroAdj;
 		v1 = adj->adjacente;
 		verificadj = adj;
 		counter = nrovertices-1;
+		int totaladj = k->nroadjacentes;
 		while((verificadj->proximo!=NULL)&&((achou!=-1)&&(counter!=0))){
 			while((adj->proximo!=NULL)&&(achou!=-1)){
 				v2 = adj->proximo->adjacente;
@@ -330,7 +332,7 @@ listaVertices *getCliqueMaximal(listaVertices *grafo,int nrovertices){
 					}
 					verificarcombinacao = verificarcombinacao->proximo;
 				}
-				if(verificarcombinacao == NULL){
+				if((verificarcombinacao == NULL)&&(totaladj <= (nrovertices-1))){
 					achou = -1;
 				}
 				adj = adj->proximo;
@@ -350,15 +352,16 @@ listaVertices *getCliqueMaximal(listaVertices *grafo,int nrovertices){
 	return lret;
 }
 
-/*
-Vertice getVertice(listaVertices *grafo){ //pega um vertice dentro da lista de vertices do grafo
+listaVertices* getCliqueMaximo(listaVertices * grafo){
+	elemento_vertice * max = grafo->primeiro;
+	int maior = 0;
 
+	while(max!=NULL){
+		if(max->nroadjacentes > maior){
+			maior = max->nroadjacentes;
+		}
+		max = max->proximo;
+	}
+
+	return getCliqueMaximal(grafo,maior);
 }
-
-listaVertices getCliqueMaximo(listaVertices *grafo){
-
-}
-
-listaVertices getCliqueMaximal(listaVertices *grafo){
-
-}*/
