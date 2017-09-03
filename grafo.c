@@ -152,7 +152,7 @@ void ExcluirGrafo(listaVertices *grafo){//exclui o grafo
 	grafo->primeiro = NULL;
 	grafo->ultimo = NULL;
 }
-
+/*
 void RemoverAresta(int v1,int v2,listaVertices *grafo){ //remove uma aresta (v1,v2) no grafo
 	elemento_vertice *busca = grafo->primeiro;
 	int encontrado = 0;
@@ -179,7 +179,7 @@ void RemoverAresta(int v1,int v2,listaVertices *grafo){ //remove uma aresta (v1,
 	}
 
 }
-
+*/
 void imprimirgrafo(listaVertices *grafo){
     elemento_vertice * d = grafo->primeiro;
     elemento_adjacente * t;
@@ -199,41 +199,33 @@ void imprimirgrafo(listaVertices *grafo){
       d = d->proximo;
     }
 }
-
+/*
 void RemoveVertice(int v1,listaVertices* l){
 	elemento_vertice* k = l->primeiro;
 	elemento_adjacente* adj;
-	elemento_adjacente * adjaux;
 	elemento_adjacente* deletado;
-	int achou = 0;
+	elemento_vertice* deletadovertice;
 
-	while((k!=NULL)&&(k->matricula != v1)){
+	while((k!=NULL)&&(k->proximo->matricula != v1)){
 		k = k->proximo;
 	}
 	if(k!=NULL){
+		deletadovertice = k->proximo;
 		adj = k->primeiroAdj;
-		while(adj!=NULL){
-			adjaux = adj->adjacente->primeiroAdj;
-			while((adjaux!=NULL)&&(achou!=1)){
-				adjaux = adjaux->proximo;
-				if(k->matricula != adjaux->proximo->adjacente->matricula){
-					achou = 1;
-					deletado = adjaux->proximo;
-					adjaux->proximo = deletado->proximo;
-					free(deletado);
-					deletado = NULL;
-				}
-			}
+		while(adj->proximo!=NULL){
 			deletado = adj;
 			adj = adj->proximo;
 			free(deletado);
 			deletado = NULL;
 		}
-		free(k);
-		k = NULL;
+		deletadovertice->matricula = 0;
+		deletadovertice->nroadjacentes = 0;
+		k->proximo = deletadovertice->proximo;
+		free(deletadovertice);
+		deletadovertice = NULL;
 	}
 }
-
+*/
 int MedirGrau(int v,listaVertices *grafo){ //Mede o grau de um vertice no grafo
 	elemento_vertice* busca = grafo->primeiro;
 
@@ -245,6 +237,42 @@ int MedirGrau(int v,listaVertices *grafo){ //Mede o grau de um vertice no grafo
 		return grauvertice;
 	}
 	return -1;
+}
+
+void InterligarVertices(listaVertices* l){
+	elemento_vertice* k = l->primeiro;
+	elemento_vertice* j;
+	elemento_adjacente* novoadj;
+
+	while(k->proximo!=NULL){
+		j = k->proximo;
+		while(j!=NULL){
+			novoadj = (elemento_adjacente*)malloc(sizeof(elemento_adjacente));
+			novoadj->adjacente = j;
+			novoadj->proximo = NULL;
+			if((k->primeiroAdj == NULL)||(k->ultimoAdj == NULL)){
+				k->primeiroAdj = novoadj;
+				k->ultimoAdj = novoadj;
+			}else{
+				k->ultimoAdj->proximo = novoadj;
+				k->ultimoAdj = novoadj;
+			}
+			k->nroadjacentes++;
+			novoadj = (elemento_adjacente*)malloc(sizeof(elemento_adjacente));
+			novoadj->adjacente = k;
+			novoadj->proximo = NULL;
+			if((j->primeiroAdj == NULL)||(j->ultimoAdj == NULL)){
+				j->primeiroAdj = novoadj;
+				j->ultimoAdj = novoadj;
+			}else{
+				j->ultimoAdj->proximo = novoadj;
+				j->ultimoAdj = novoadj;
+			}
+			j->nroadjacentes++;
+			j = j->proximo;
+		}
+		k = k->proximo;
+	}
 }
 
 listaVertices *getCliqueMaximal(listaVertices *grafo,int nrovertices){
@@ -313,12 +341,11 @@ listaVertices *getCliqueMaximal(listaVertices *grafo,int nrovertices){
 			v1 = adj->adjacente;
 			counter--;
 		}
-		InsereVertice(v1->nome,v1->matricula,lret);
-
 		if(achou == -1){
 			return NULL;
 		}
-		//criar funcao interligar vertices
+		InsereVertice(v1->nome,v1->matricula,lret);
+		InterligarVertices(lret);
 	}
 	return lret;
 }
