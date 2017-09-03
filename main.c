@@ -26,8 +26,10 @@ int main(){
 
 	InsereRegistrosLido(grafo);
 
-	/*listaVertices* gr = getCliqueMaximal(grafo,3);*/
+	listaVertices* gr = getCliqueMaximal(grafo,49);
+
 	imprimirgrafo(grafo);
+
 	//RemoveVertice(6,grafo);
 	//imprimirgrafo(grafo);
 	printf("vertice removido\n");
