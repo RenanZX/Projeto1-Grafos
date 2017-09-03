@@ -28,7 +28,7 @@ int main(){
 
 	listaVertices* gr = getCliqueMaximal(grafo,49);
 
-	imprimirgrafo(grafo);
+	ImprimirGrafo(grafo);
 
 	//RemoveVertice(6,grafo);
 	//imprimirgrafo(grafo);

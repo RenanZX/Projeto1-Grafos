@@ -180,23 +180,25 @@ void RemoverAresta(int v1,int v2,listaVertices *grafo){ //remove uma aresta (v1,
 
 }
 */
-void imprimirgrafo(listaVertices *grafo){
+void ImprimirGrafo(listaVertices *grafo){
     elemento_vertice * d = grafo->primeiro;
     elemento_adjacente * t;
 
     while(d!=NULL){
-    	printf("valor vertice\n");
+    	/*printf("valor vertice\n");
     	printf("nome: %s \n",d->nome);
-    	printf("matricula %d\n",d->matricula);
+    	printf("matricula %d\n",d->matricula);*/
       t = d->primeiroAdj;
-      printf("adjacentes\n");
+      /*printf("adjacentes\n");*/
+      printf("\n Lista de adjacencia do vertice %d\n head ", d->matricula);
       while(t!=NULL){
-    	printf("nome: %s \n",t->adjacente->nome);
-    	printf("matricula %d\n",t->adjacente->matricula);
-		t = t->proximo;
-      }
+			printf("-> %d", t->adjacente->matricula);
+    	/*printf("nome: %s \n",t->adjacente->nome);
+    	printf("matricula %d\n",t->adjacente->matricula);*/
+			t = t->proximo;
+    }
 	  printf("\n");
-      d = d->proximo;
+    d = d->proximo;
     }
 }
 /*
