@@ -2,8 +2,6 @@
 #define _H_ORGANIZAARQUIVO
 
 #include "grafo.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 typedef struct {
   int vert, qtd_arestas;
