@@ -48,3 +48,39 @@ Aluno* LerRegistros(Aluno* aluno){
 
   return aluno;
 }
+
+
+listaVertices* InsereVerticesLidos(listaVertices* grafo){
+
+  Aluno* aluno = malloc(sizeof(Aluno)*50);  /* quantidade de aluno total. */
+  LerRegistros(aluno);
+
+  int i=0;
+  Vertice aux[50];
+  for(i=0;i<49;i++){
+    strcpy(aux[i].nome,aluno[i].nome);
+    aux[i].matricula = aluno[i].vert;
+    InsereVertice(&aux[i],grafo);
+  }
+
+  int j,k[50], m;
+  Vertice aux2[50];
+
+  for(i=0;i<50;i++){
+    for(j=0; j < (aluno[i].qtd_arestas) && (aluno[i].arestas[j] != 0) ; j++){
+      /*printf("Aluno %s | Valor de j = %d | Repete = %d\n", aluno[i].nome, j, aluno[i].qtd_arestas);*/
+      
+      m = aluno[i].arestas[j];
+      /*printf("nome %s | Valor da aresta: %d\n", aluno[m-1].nome, aluno[i].arestas[j]);*/
+
+      strcpy(aux2[i].nome,aluno[m-1].nome);
+      aux2[i].matricula = aluno[i].arestas[j];
+      InsereAresta(&aux[i], &aux2[i], grafo);
+    }
+  }
+
+  printf("nome %s \n", aluno[4].nome);  
+ 
+
+  return grafo;
+}
