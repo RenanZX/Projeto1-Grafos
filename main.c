@@ -5,7 +5,7 @@
 int main(){
 	listaVertices* grafo = CriarLista();
 
-	InsereVertice("a",1,grafo);
+	/*InsereVertice("a",1,grafo);
 	InsereVertice("b",2,grafo);
 	InsereVertice("c",3,grafo);
 	InsereVertice("d",4,grafo);
@@ -22,9 +22,12 @@ int main(){
 	InsereAresta(3,4,grafo);
 	InsereAresta(3,5,grafo);
 	InsereAresta(4,5,grafo);
-	InsereAresta(5,6,grafo);
-	listaVertices* gr = getCliqueMaximal(grafo,3);
-	imprimirgrafo(gr);
+	InsereAresta(5,6,grafo);*/
+
+	InsereRegistrosLido(grafo);
+
+	/*listaVertices* gr = getCliqueMaximal(grafo,3);*/
+	imprimirgrafo(grafo);
 	//RemoveVertice(6,grafo);
 	//imprimirgrafo(grafo);
 	printf("vertice removido\n");
