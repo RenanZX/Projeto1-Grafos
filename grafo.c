@@ -189,7 +189,7 @@ void ImprimirGrafo(listaVertices *grafo){
     	printf("nome: %s \n",d->nome);
     	printf("matricula %d\n",d->matricula);*/
       t = d->primeiroAdj;
-      printf("\n Adjacency list of vertex %d\n head ", d->matricula);
+      printf("\n lista de Adjacentes do vertice %d\n head ", d->matricula);
       /*printf("adjacentes\n");*/
       while(t!=NULL){
 	      printf("-> %d", t->adjacente->matricula);
