@@ -180,25 +180,23 @@ void RemoverAresta(int v1,int v2,listaVertices *grafo){ //remove uma aresta (v1,
 
 }
 */
-void ImprimirGrafo(listaVertices *grafo){
+void imprimirgrafo(listaVertices *grafo){
     elemento_vertice * d = grafo->primeiro;
     elemento_adjacente * t;
 
     while(d!=NULL){
-    	/*printf("valor vertice\n");
+    	printf("valor vertice\n");
     	printf("nome: %s \n",d->nome);
-    	printf("matricula %d\n",d->matricula);*/
+    	printf("matricula %d\n",d->matricula);
       t = d->primeiroAdj;
-      /*printf("adjacentes\n");*/
-      printf("\n Lista de adjacencia do vertice %d\n head ", d->matricula);
+      printf("adjacentes\n");
       while(t!=NULL){
-			printf("-> %d", t->adjacente->matricula);
-    	/*printf("nome: %s \n",t->adjacente->nome);
-    	printf("matricula %d\n",t->adjacente->matricula);*/
-			t = t->proximo;
-    }
+    	printf("nome: %s \n",t->adjacente->nome);
+    	printf("matricula %d\n",t->adjacente->matricula);
+		t = t->proximo;
+      }
 	  printf("\n");
-    d = d->proximo;
+      d = d->proximo;
     }
 }
 /*
@@ -287,8 +285,6 @@ listaVertices *getCliqueMaximal(listaVertices *grafo,int nrovertices){
 		return lret;
 	}
 
-	nrovertices = nrovertices-1;
-
 	elemento_vertice* k = grafo->primeiro;
 	elemento_adjacente* adj;
 	elemento_adjacente* verificarcombinacao;
@@ -319,32 +315,44 @@ listaVertices *getCliqueMaximal(listaVertices *grafo,int nrovertices){
 
 	if(achou == 1){
 		achou = 0;
+		int marcado = 0;
 		int counteradj = 0;
 		InsereVertice(k->nome,k->matricula,lret);
 		adj = k->primeiroAdj;
 		v1 = adj->adjacente;
 		verificadj = adj;
-		counter = nrovertices-1;
+		adj = adj->proximo;
+		counter = nrovertices-2;
 		int totaladj = k->nroadjacentes;
-		while((verificadj->proximo!=NULL)&&((achou!=-1)&&(counter!=0))){
-			while((adj->proximo!=NULL)&&(achou!=-1)){
-				v2 = adj->proximo->adjacente;
+		while((verificadj!=NULL)&&((achou!=-1)&&(counter!=0))){
+			while((adj!=NULL)&&(achou!=-1)){
+				v2 = adj->adjacente;
 				verificarcombinacao = v1->primeiroAdj;
-				while((verificarcombinacao->proximo!=NULL)&&(achou!=1)){
+				while((verificarcombinacao!=NULL)&&(achou!=1)){
 					if(v2->matricula == verificarcombinacao->adjacente->matricula){
 						achou = 1;
+					}else{
+						achou = -1;
 					}
 					verificarcombinacao = verificarcombinacao->proximo;
 				}
-				if((verificarcombinacao == NULL)&&(totaladj <= (nrovertices-1))){
-					achou = -1;
+				if((achou == -1)&&(totaladj > (nrovertices-1))){
+					achou = 0;
+					marcado = v2->matricula;
 				}
 				adj = adj->proximo;
+				if(achou!=-1){
+					achou = 0;
+				}
 			}
 			InsereVertice(v1->nome,v1->matricula,lret);
 			verificadj = verificadj->proximo;
+			if(verificadj->adjacente->matricula == marcado){
+				verificadj = verificadj->proximo;
+			}
 			adj = verificadj;
 			v1 = adj->adjacente;
+			adj = adj->proximo;
 			counter--;
 		}
 		if(achou == -1){
