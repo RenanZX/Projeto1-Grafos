@@ -24,9 +24,9 @@ int main(){
 	InsereAresta(4,5,grafo);
 	InsereAresta(5,6,grafo);*/
 
+	/*OrdenaDescrescente(grafo);*/
 	InsereRegistrosLido(grafo);
-
-	listaVertices* gr = getCliqueMaximal(grafo,49);
+	/*listaVertices* gr = getCliqueMaximal(grafo,49);*/
 
 	ImprimirGrafo(grafo);
 

@@ -9,6 +9,7 @@ typedef struct {
   char nome[50];
 }Aluno;
 Aluno* LerRegistros(Aluno* aluno);
+Aluno* OrdenaDescrescente(Aluno* aluno);
 
 listaVertices* InsereRegistrosLido(listaVertices* grafo);
 /*

@@ -37,7 +37,12 @@ Aluno* LerRegistros(Aluno* aluno){
         data += offset; /*adicionando o numero de bytes que o sscanf ja consomiu para nao ler do comeco novamente*/
       }
 
-      aluno[k].qtd_arestas = j; /*atribuicao para o total de arestas que o aluno vai ter*/
+      /* if utilizado para atribuir a quantidade correta(n considera 0 vertices como sendo 1) de arestas total do vertice*/
+      if(j==1 && aluno[k].arestas[0] < 1){
+        aluno[k].qtd_arestas = j-1; /*atribuicao para o total de arestas que o aluno vai ter*/
+      } else {
+        aluno[k].qtd_arestas = j;
+      }
 
       fscanf(fp, "\n%[^\n]s\n", str_lida);/*pulando para a prox linha*/
       k++; /* incrementacao para salvar os proximos valores do prox. loop em um novo aluno*/
@@ -49,12 +54,34 @@ Aluno* LerRegistros(Aluno* aluno){
 }
 
 
+Aluno* OrdenaDescrescente(Aluno* aluno){
+  int i, fez_troca;
+  Aluno aux;
+  LerRegistros(aluno);
+
+  /*loop com ubble sort para ordenar de forma decrescente os aluno pelo grau dos vertices*/
+  fez_troca=1;
+  while(fez_troca){
+    fez_troca=0;
+    for(i=0;i<50;i++){
+      if(aluno[i].qtd_arestas < aluno[i+1].qtd_arestas){
+        aux = aluno[i];
+        aluno[i] = aluno[i+1];
+        aluno[i+1] = aux;
+        fez_troca = 1;
+      }
+    }
+  }
+  return aluno;
+}
+
 listaVertices* InsereRegistrosLido(listaVertices* grafo){
 
   Aluno* aluno = malloc(sizeof(Aluno)*50);  /* quantidade de aluno total. */
   int i, j;
   
   LerRegistros(aluno);
+  OrdenaDescrescente(aluno);
 
   /* loop para adicionar todos os vertices */
   for(i=0;i<49;i++){

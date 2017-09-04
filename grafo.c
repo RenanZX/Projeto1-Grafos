@@ -1,5 +1,6 @@
 #include "grafo.h"
 
+
 listaVertices* CriarLista(){ //cria e retorna um grafo
 	listaVertices *grafo = (listaVertices *)malloc(sizeof(listaVertices));
 	grafo->primeiro = NULL;
