@@ -43,6 +43,6 @@ void ImprimirGrafo(listaVertices *grafo); //imprime os valores do grafo na tela
 int MedirGrau(int v,listaVertices *grafo); //Mede o grau de um vertice no grafo
 void InterligarVertices(listaVertices* l); //Interliga todos os vertices do grafo
 listaVertices* getCliqueMaximal(listaVertices *grafo,int nrovertices); //retorna um clique maximal recebendo um grafo e um numero contendo a quantidade de vertices
-listaVertices* getCliqueMaximo(listaVertices *grafo);
+listaVertices* getCliqueMaximo(listaVertices *grafo); //retorna um clique maximo do grafo
 
 #endif

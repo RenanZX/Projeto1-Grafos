@@ -1,6 +1,5 @@
 #include "grafo.h"
 
-
 listaVertices* CriarLista(){ //cria e retorna um grafo
 	listaVertices *grafo = (listaVertices *)malloc(sizeof(listaVertices));
 	grafo->primeiro = NULL;
@@ -9,15 +8,15 @@ listaVertices* CriarLista(){ //cria e retorna um grafo
 }
 
 void InsereVertice(char * nome,int matricula,listaVertices *grafo){ //Insere Vertices no final da lista de vertices do grafo
-	elemento_vertice * novoelemento = (elemento_vertice *)malloc(sizeof(elemento_vertice));
-	strcpy(novoelemento->nome,nome);
+	elemento_vertice * novoelemento = (elemento_vertice *)malloc(sizeof(elemento_vertice)); /*cria um novo elemento*/
+	strcpy(novoelemento->nome,nome); /*insere o nome e a matricula recebida como parametro*/
 	novoelemento->matricula = matricula;
-	novoelemento->nroadjacentes = 0;
+	novoelemento->nroadjacentes = 0; /*zera o numero de adjacentes ao vertice*/
 	novoelemento->proximo = NULL;
 	novoelemento->primeiroAdj = NULL;
 	novoelemento->ultimoAdj = NULL;
 	if(grafo->ultimo == NULL){
-		grafo->ultimo = novoelemento;
+		grafo->ultimo = novoelemento; /*adiciona o elemento no grafo*/
 	}else{
 		grafo->ultimo->proximo = novoelemento;
 		grafo->ultimo = novoelemento;
@@ -40,7 +39,7 @@ void InsereAdjacente(int novoadjacentemat,int verticemat,listaVertices* listav){
 	while((vert!=NULL)&&(vert->matricula != verticemat)){
 		vert = vert->proximo;
 	}
-	elemento_adjacente * novoelementoadjv1 = (elemento_adjacente *)malloc(sizeof(elemento_adjacente));
+	elemento_adjacente * novoelementoadjv1 = (elemento_adjacente *)malloc(sizeof(elemento_adjacente));//aloca um novo elemento adjacente para a lista do novoadjacentemat
 	novoelementoadjv1->adjacente = vert;
 	novoelementoadjv1->proximo = NULL;
 	if(ptr->ultimoAdj == NULL){
@@ -54,7 +53,7 @@ void InsereAdjacente(int novoadjacentemat,int verticemat,listaVertices* listav){
 	}
 	ptr->nroadjacentes++;
 	
-	elemento_adjacente * novoelementoadjv2 = (elemento_adjacente *)malloc(sizeof(elemento_adjacente));
+	elemento_adjacente * novoelementoadjv2 = (elemento_adjacente *)malloc(sizeof(elemento_adjacente));//aloca um novo elemento para a lista do verticemat
 	novoelementoadjv2->adjacente = ptr;
 	novoelementoadjv2->proximo = NULL;
 	if(vert->ultimoAdj == NULL){
@@ -66,38 +65,38 @@ void InsereAdjacente(int novoadjacentemat,int verticemat,listaVertices* listav){
 	if(vert->primeiroAdj == NULL){
 		vert->primeiroAdj = novoelementoadjv2;
 	}
-	vert->nroadjacentes++;
+	vert->nroadjacentes++;//incrementa o numero de adjacentes pertencentes ao vertice
 }
 
 /*void BuscarVertice(Vertice vertice,listaVertices *grafo){ //Busca um vertice no grafo
 
 }*/
 
-int ExisteVertice(int mat,listaVertices *grafo){
+int ExisteVertice(int mat,listaVertices *grafo){ //verifica se existe um vertice no grafo
 	elemento_vertice * busca = grafo->primeiro;
-	while((busca!=NULL)&&(busca->matricula != mat)){
+	while((busca!=NULL)&&(busca->matricula != mat)){ //faz a busca
 		busca = busca->proximo;
 	}
 	if(busca == NULL){
-		return 0;
+		return 0; //retorna 0 caso nao encontre
 	}
 	return 1;
 }
 
 int ExisteAdjacente(int v1,int adjacente,listaVertices *grafo){
 	elemento_vertice* busca = grafo->primeiro;
-	while((busca!=NULL)&&(busca->matricula != v1)){
+	while((busca!=NULL)&&(busca->matricula != v1)){//faz a busca pelo vertice
 		busca = busca->proximo;
 	}
 	if(busca == NULL){
-		return 0;
+		return 0; //retorna 0 caso nao encontre
 	}
-	elemento_adjacente* buscadjacente = busca->primeiroAdj;
+	elemento_adjacente* buscadjacente = busca->primeiroAdj; //faz a busca pelo adjacente
 	while((buscadjacente!=NULL)&&(buscadjacente->adjacente->matricula != adjacente)){
 		buscadjacente = buscadjacente->proximo;
 	}
 	if(buscadjacente == NULL){
-		return 0;
+		return 0; //retorna 0 caso nao encontre
 	}
 	return 1;
 }
@@ -276,7 +275,7 @@ void InterligarVertices(listaVertices* l){
 	}
 }
 
-listaVertices *getCliqueMaximal(listaVertices *grafo,int nrovertices){
+listaVertices *getCliqueMaximal(listaVertices *grafo,int nrovertices){ /*retorna um clique maximal dentro do grafo*/
 	int counter = 0;
 	int achou = 0;
 	listaVertices* lret  = CriarLista();
@@ -293,7 +292,7 @@ listaVertices *getCliqueMaximal(listaVertices *grafo,int nrovertices){
 	elemento_vertice* v1;
 	elemento_vertice* v2;
 
-	while((k!=NULL)&&(achou!=1)){
+	while((k!=NULL)&&(achou!=1)){ /*procura um vertice que possui adjacentes com a mesma quantidade de ligações deste vertice*/
 		if(k->nroadjacentes >= (nrovertices-1)){
 			counter = nrovertices-1;
 			adj = k->primeiroAdj;
@@ -314,21 +313,21 @@ listaVertices *getCliqueMaximal(listaVertices *grafo,int nrovertices){
 	}
 
 
-	if(achou == 1){
+	if(achou == 1){//caso encontre testa se existe um clique
 		achou = 0;
 		int marcado = 0;
 		int counteradj = 0;
 		InsereVertice(k->nome,k->matricula,lret);
 		adj = k->primeiroAdj;
 		v1 = adj->adjacente;
-		verificadj = adj;
+		verificadj = adj;//verificador dos adjacentes
 		adj = adj->proximo;
-		counter = nrovertices-2;
+		counter = nrovertices-2;//contador de vertices a serem verificados
 		int totaladj = k->nroadjacentes;
 		while((verificadj!=NULL)&&((achou!=-1)&&(counter!=0))){
-			while((adj!=NULL)&&(achou!=-1)){
+			while((adj!=NULL)&&(achou!=-1)){ //verifica se a aresta (v1,v2) existe
 				v2 = adj->adjacente;
-				verificarcombinacao = v1->primeiroAdj;
+				verificarcombinacao = v1->primeiroAdj; //e feita uma pesquisa na lista de adjacentes
 				while((verificarcombinacao!=NULL)&&(achou!=1)){
 					if(v2->matricula == verificarcombinacao->adjacente->matricula){
 						achou = 1;
@@ -337,7 +336,7 @@ listaVertices *getCliqueMaximal(listaVertices *grafo,int nrovertices){
 					}
 					verificarcombinacao = verificarcombinacao->proximo;
 				}
-				if((achou == -1)&&(totaladj > (nrovertices-1))){
+				if((achou == -1)&&(totaladj > (nrovertices-1))){ /*caso nao encontre v2 na lista de adjacencia de v1 e ainda existam vertices a serem verificados v2 e marcado*/
 					achou = 0;
 					marcado = v2->matricula;
 				}
@@ -346,23 +345,23 @@ listaVertices *getCliqueMaximal(listaVertices *grafo,int nrovertices){
 					achou = 0;
 				}
 			}
-			InsereVertice(v1->nome,v1->matricula,lret);
+			InsereVertice(v1->nome,v1->matricula,lret); /*ao encontrar pelomenos uma aresta correspondente ao clique o vertice e inserido na lista*/
 			verificadj = verificadj->proximo;
-			if(verificadj->adjacente->matricula == marcado){
+			if(verificadj->adjacente->matricula == marcado){/*o vertice marcado é pulado para nao ser verificado*/
 				verificadj = verificadj->proximo;
 			}
 			adj = verificadj;
 			v1 = adj->adjacente;
 			adj = adj->proximo;
-			counter--;
+			counter--;/*decrementa uma unidade no contador*/
 		}
-		if(achou == -1){
+		if(achou == -1){ /*caso nao encontre o clique retorna uma lista vazia*/
 			return NULL;
 		}
 		InsereVertice(v1->nome,v1->matricula,lret);
 		InterligarVertices(lret);
 	}
-	return lret;
+	return lret; /*caso contrario retorna a lista contendo os vertices do clique*/
 }
 
 listaVertices* getCliqueMaximo(listaVertices * grafo){
@@ -370,11 +369,11 @@ listaVertices* getCliqueMaximo(listaVertices * grafo){
 	int maior = 0;
 
 	while(max!=NULL){
-		if(max->nroadjacentes > maior){
+		if(max->nroadjacentes > maior){ //procura o vertice com mais adjacentes
 			maior = max->nroadjacentes;
 		}
 		max = max->proximo;
 	}
 
-	return getCliqueMaximal(grafo,maior);
+	return getCliqueMaximal(grafo,maior); //retorna o clique Maximal desse vertice
 }
