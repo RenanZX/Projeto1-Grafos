@@ -39,7 +39,7 @@ int ListaAdjVazia(int v,listaVertices *grafo); //Verifica se a lista de vertices
 void ExcluirGrafo(listaVertices *grafo);//exclui o grafo
 //void RemoverAresta(int v1,int v2,listaVertices *grafo); //remove uma aresta (v1,v2) no grafo
 //void RemoveVertice(int v1,listaVertices* l); //remove um vertice do grafo
-void ImprimirGrafo(listaVertices *grafo); //imprime os valores do grafo na tela
+void imprimirgrafo(listaVertices *grafo); //imprime os valores do grafo na tela
 int MedirGrau(int v,listaVertices *grafo); //Mede o grau de um vertice no grafo
 void InterligarVertices(listaVertices* l); //Interliga todos os vertices do grafo
 listaVertices* getCliqueMaximal(listaVertices *grafo,int nrovertices); //retorna um clique maximal recebendo um grafo e um numero contendo a quantidade de vertices
