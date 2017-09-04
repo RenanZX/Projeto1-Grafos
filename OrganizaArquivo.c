@@ -54,7 +54,7 @@ Aluno* LerRegistros(Aluno* aluno){
 }
 
 
-Aluno* OrdenaDescrescente(Aluno* aluno){
+Aluno* GrafoGrauDecrescente(Aluno* aluno){
   int i, fez_troca;
   Aluno aux;
   LerRegistros(aluno);
@@ -81,7 +81,7 @@ listaVertices* InsereRegistrosLido(listaVertices* grafo){
   int i, j;
   
   LerRegistros(aluno);
-  OrdenaDescrescente(aluno);
+  GrafoGrauDecrescente(aluno);
 
   /* loop para adicionar todos os vertices */
   for(i=0;i<49;i++){

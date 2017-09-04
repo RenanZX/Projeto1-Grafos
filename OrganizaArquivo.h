@@ -9,12 +9,10 @@ typedef struct {
   char nome[50];
 }Aluno;
 Aluno* LerRegistros(Aluno* aluno);
-Aluno* OrdenaDescrescente(Aluno* aluno);
+Aluno* GrafoGrauDecrescente(Aluno* aluno);
 
 listaVertices* InsereRegistrosLido(listaVertices* grafo);
 /*
-listaVertices LerRegistros(string caminhoArquivo);//a implementar
-void ImprimirGrafoGrauDecrescente();//a implementar
 void ImprimirCliqueMaximal()//a implementar
 void ImprimirCliqueMaximo();//a implementar
 */

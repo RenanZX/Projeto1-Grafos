@@ -181,7 +181,7 @@ void RemoverAresta(int v1,int v2,listaVertices *grafo){ //remove uma aresta (v1,
 
 }
 */
-void imprimirgrafo(listaVertices *grafo){
+void ImprimirGrafo(listaVertices *grafo){
     elemento_vertice * d = grafo->primeiro;
     elemento_adjacente * t;
 
