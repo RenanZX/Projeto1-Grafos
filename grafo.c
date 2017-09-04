@@ -185,18 +185,20 @@ void ImprimirGrafo(listaVertices *grafo){
     elemento_adjacente * t;
 
     while(d!=NULL){
-    	printf("valor vertice\n");
+    	/*printf("valor vertice\n");
     	printf("nome: %s \n",d->nome);
-    	printf("matricula %d\n",d->matricula);
+    	printf("matricula %d\n",d->matricula);*/
       t = d->primeiroAdj;
-      printf("adjacentes\n");
+      printf("\n Adjacency list of vertex %d\n head ", d->matricula);
+      /*printf("adjacentes\n");*/
       while(t!=NULL){
-    	printf("nome: %s \n",t->adjacente->nome);
-    	printf("matricula %d\n",t->adjacente->matricula);
-		t = t->proximo;
-      }
-	  printf("\n");
-      d = d->proximo;
+	      printf("-> %d", t->adjacente->matricula);
+	    	/*printf("nome: %s \n",t->adjacente->nome);
+	    	printf("matricula %d\n",t->adjacente->matricula);*/
+				t = t->proximo;
+    	}
+	  	printf("\n");
+    	d = d->proximo;
     }
 }
 /*
