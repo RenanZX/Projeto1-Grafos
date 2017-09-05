@@ -452,19 +452,15 @@ listaVertices* getCliqueMaximo(listaVertices * grafo){
 	while(max!=NULL){
 		if(max->nroadjacentes > maior){ //procura o vertice com mais adjacentes
 			maior = max->nroadjacentes; //caso encontre um numero de arestas maior que o maior definido,ele e considerado o novo maior
-			printf("maior = %d primera vez\n",maior );
 			elemento_adjacente* maxadj = max->primeiroAdj;
 			while(maxadj!=NULL){
 				if(maxadj->adjacente->nroadjacentes <= maior){
 					maior = maxadj->adjacente->nroadjacentes;
-					printf("maior = %d segunda vez\n",maior);
 				}
 				maxadj = maxadj->proximo;
 			}
 		}
 		max = max->proximo; //vai para o proximo
 	}
-
-	printf("maior = %d\n",maior);
 	return getCliqueMaximal(grafo,maior); //retorna o clique Maximal desse vertice
 }
