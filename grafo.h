@@ -44,10 +44,11 @@ void ExcluirGrafo(listaVertices *grafo);//exclui o grafo
 void ImprimirGrafo(listaVertices *grafo); //imprime os valores do grafo na tela
 void RemoveVertice(int v,listaVertices* grafo);
 void RemoveInicio(listaVertices* grafo);
-void UnirListas(listaVertices* l1,listaVertices* l2);
-void BronkerBosch(listaVertices* P,listaVertices* R,listaVertices *X);
-void IntersecionarListas(listaVertices* l1,listaVertices *l2);
-void IntersecionarListas_v(listaVertices* l1,elemento_vertice* l2);
+void CopiarLista(listaVertices* l1 ,listaVertices* l2);
+listaVertices* UnirListas(listaVertices* l1,listaVertices* l2);
+//void BronkerBosch(listaVertices* P,listaVertices* R,listaVertices *X);
+listaVertices* IntersecionarListas(listaVertices* l1,listaVertices *l2);
+listaVertices* IntersecionarListas_v(listaVertices* l1,elemento_vertice* l2);
 int MedirGrau(int v,listaVertices *grafo); //Mede o grau de um vertice no grafo
 void InterligarVertices(listaVertices* l); //Interliga todos os vertices do grafo
 void ApagarMarcas(listaVertices* grafo);//apaga marcas do grafo

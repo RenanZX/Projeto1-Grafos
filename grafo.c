@@ -158,16 +158,10 @@ void ImprimirGrafo(listaVertices *grafo){
     elemento_adjacente * t;
 
     while(d!=NULL){
-    	/*printf("valor vertice\n");
-    	printf("nome: %s \n",d->nome);
-    	printf("matricula %d\n",d->matricula);*/
       t = d->primeiroAdj;
       printf("\n lista de Adjacentes do vertice %d\n head ", d->matricula);
-      /*printf("adjacentes\n");*/
       while(t!=NULL){
 	      printf("-> %d", t->adjacente->matricula);
-	    	/*printf("nome: %s \n",t->adjacente->nome);
-	    	printf("matricula %d\n",t->adjacente->matricula);*/
 				t = t->proximo;
     	}
 	  	printf("\n");
@@ -261,7 +255,7 @@ void RemoveInicio(listaVertices* grafo){
 	free(removido);
 }
 
-void UnirListas(listaVertices* l1,listaVertices* l2){
+listaVertices* UnirListas(listaVertices* l1,listaVertices* l2){
 	elemento_vertice* alvo = l1->primeiro;
 	elemento_vertice* alvo2 = l2->primeiro;
 	listaVertices* retorno = CriarLista();
@@ -275,11 +269,10 @@ void UnirListas(listaVertices* l1,listaVertices* l2){
 		}
 		alvo = alvo->proximo;
 	}
-	ExcluirGrafo(l1);
-	l1 = retorno;
+	return retorno;
 }
 
-void IntersecionarListas(listaVertices* l1,listaVertices *l2){
+listaVertices* IntersecionarListas(listaVertices* l1,listaVertices *l2){
 	elemento_vertice* alvo = l1->primeiro;
 	elemento_vertice* alvo2 = l2->primeiro;
 	listaVertices* retorno = CriarLista();
@@ -293,11 +286,10 @@ void IntersecionarListas(listaVertices* l1,listaVertices *l2){
 		}
 		alvo = alvo->proximo;
 	}
-	ExcluirGrafo(l1);
-	l1 = retorno;
+	return retorno;
 }
 
-void IntersecionarListas_v(listaVertices* l1,elemento_vertice * l2){
+listaVertices* IntersecionarListas_v(listaVertices* l1,elemento_vertice * l2){
 	elemento_vertice* alvo = l1->primeiro;
 	elemento_adjacente* alvo2 = l2->primeiroAdj;
 	listaVertices* retorno = CriarLista();
@@ -311,45 +303,150 @@ void IntersecionarListas_v(listaVertices* l1,elemento_vertice * l2){
 		}
 		alvo = alvo->proximo;
 	}
-	ExcluirGrafo(l1);
-	l1 = retorno;
+	return retorno;
+}
+
+void CopiarLista(listaVertices* l1,listaVertices* l2){
+	elemento_vertice* k = l2->primeiro;
+
+	while(k!=NULL){
+		InsereVertice(k->nome,k->matricula,l1);
+		k = k->proximo;
+	}
 }
 
 void BronkerBosh(listaVertices *P,listaVertices * R,listaVertices *X){
-	printf("entrou\n");
-	if((ListaVazia(P)==1)&&(ListaVazia(X)==1)){
-		cliques[poscliques] = CriarLista();
-		cliques[poscliques] = R;
-		poscliques++;
-		printf("clique = %d",poscliques);
+	listaVertices* R_verificar;
+	listaVertices* X_verificar;
+	listaVertices* P_verificar;
+
+	if(ListaVazia(P)==1){
+		if(ListaVazia(X)==1){
+			cliques[poscliques] = R;
+			poscliques++;
+		}else{
+			ExcluirGrafo(R);
+		}
 	}else{
-		elemento_vertice* v = P->primeiro;
-		while(v!=NULL){
-			InsereVertice(v->nome,v->matricula,R);
-			IntersecionarListas_v(P,v);
-			IntersecionarListas_v(X,v);
-			printf("entrou aq loop\n");
+		while(P->primeiro!=NULL){
+			CopiarLista(R_verificar,R);
+			InsereVertice(P->primeiro->nome,P->primeiro->matricula,R_verificar);
+			P_verificar = IntersecionarListas_v(P,P->primeiro);
+			X_verificar = IntersecionarListas_v(X,P->primeiro);
 			BronkerBosh(P,R,X);
-			printf("continuou\n");
-			InsereVertice(v->nome,v->matricula,X);
-			v = v->proximo;
+			InsereVertice(P->primeiro->nome,P->primeiro->matricula,X);
 			RemoveInicio(P);
+			ExcluirGrafo(P_verificar);
+			ExcluirGrafo(X_verificar);
 		}
 	}
 }
 
 
 listaVertices *getCliqueMaximal(listaVertices *grafo,int nrovertices){ /*retorna um clique maximal dentro do grafo*/
-	listaVertices* l1 = CriarLista();
-	listaVertices* l2 = CriarLista();
-	printf("segmentation aq\n");
-	BronkerBosh(grafo,l1,l2);
-	printf("segmentation aq\n");
-	return cliques[0];
+	int counter = 0;
+	int achou = 0;
+	listaVertices* lret  = CriarLista();
+
+	if(nrovertices == 1){
+		InsereVertice(grafo->primeiro->nome,grafo->primeiro->matricula,lret);
+		return lret;
+	}
+
+	elemento_vertice* k = grafo->primeiro;
+	elemento_adjacente* adj;
+	elemento_adjacente* verificarcombinacao;
+	elemento_adjacente* verificadj;
+	elemento_vertice* v1;
+	elemento_vertice* v2;
+
+	while((k!=NULL)&&(achou!=1)){ /*procura um vertice que possui adjacentes com a mesma quantidade de ligações deste vertice*/
+		if((k->nroadjacentes >= (nrovertices-1))&&(k->cliquepego == 0)){
+			counter = nrovertices-1;
+			adj = k->primeiroAdj;
+			while((adj!=NULL)&&((achou!=-1)&&(counter<=0))){
+				if((adj->adjacente->nroadjacentes < (nrovertices-1))||(adj->adjacente->cliquepego == 1)){
+					achou = -1;
+				}
+				adj = adj->proximo;
+				counter--;
+			}
+			if(achou!=-1){
+				achou = 1;
+				k->cliquepego = 1;
+			}
+		}
+		if(achou!=1){
+			k = k->proximo;
+			achou = 0;
+		}
+	}
+
+	elemento_adjacente* marcar = k->primeiroAdj;
+
+	while(marcar!=NULL){
+		marcar->adjacente->cliquepego = 1;
+		marcar = marcar->proximo;
+	}
+
+
+	if(achou == 1){//caso encontre testa se existe um clique
+		achou = 0;
+		int pos = 0;
+		int counteradj = 0;
+		InsereVertice(k->nome,k->matricula,lret);
+		adj = k->primeiroAdj;
+		v1 = adj->adjacente;
+		verificadj = adj;//verificador dos adjacentes
+		adj = adj->proximo;
+		counter = nrovertices;//contador de vertices a serem verificados
+		while((verificadj!=NULL)&&((achou!=-1)&&(counter!=0))){
+			while((adj!=NULL)&&((achou!=-1)&&(v1->marcado!=1))){ //verifica se a aresta (v1,v2) existe
+				v2 = adj->adjacente;
+				verificarcombinacao = v1->primeiroAdj; //e feita uma pesquisa na lista de adjacentes
+				while((verificarcombinacao!=NULL)&&(achou!=1)){
+					if(v2->matricula == verificarcombinacao->adjacente->matricula){
+						achou = 1;
+					}else{
+						achou = -1;
+					}
+					verificarcombinacao = verificarcombinacao->proximo;
+				}
+				if(achou == -1){ /*caso nao encontre v2 na lista de adjacencia de v1 e ainda existam vertices a serem verificados v2 e marcado*/
+					achou = 0;
+					v2->marcado = 1;
+				}
+				adj = adj->proximo;
+				if(achou!=-1){
+					achou = 0;
+				}
+			}
+			if(v1->marcado == 0){
+				InsereVertice(v1->nome,v1->matricula,lret); /*ao encontrar pelomenos uma aresta correspondente ao clique o vertice e inserido na lista*/
+			}
+			if(verificadj->adjacente->marcado == 1){/*o vertice marcado é pulado para nao ser verificado*/
+				verificadj = verificadj->proximo;
+			}
+			verificadj = verificadj->proximo;
+			adj = verificadj;
+			v1 = adj->adjacente;
+			adj = adj->proximo;
+			counter--;/*decrementa uma unidade no contador*/
+		}
+		if(v1->marcado==0){
+			InsereVertice(v1->nome,v1->matricula,lret);	
+		}
+		InterligarVertices(lret);
+		ApagarMarcas(grafo);
+		if(achou == -1){ /*caso nao encontre o clique retorna uma lista vazia*/
+			return NULL;
+		}
+	}
+	return lret; /*caso contrario retorna a lista contendo os vertices do clique*/
 }
 
 listaVertices* getCliqueMaximo(listaVertices * grafo){
-	/*elemento_vertice * max = grafo->primeiro;
+	elemento_vertice * max = grafo->primeiro;
 	int maior = 0;
 
 	while(max!=NULL){
@@ -368,9 +465,6 @@ listaVertices* getCliqueMaximo(listaVertices * grafo){
 		max = max->proximo; //vai para o proximo
 	}
 
-	printf("maior = %d\n",maior);*/
-
-	int maior = 0;
-
+	printf("maior = %d\n",maior);
 	return getCliqueMaximal(grafo,maior); //retorna o clique Maximal desse vertice
 }
