@@ -4,7 +4,8 @@
 
 int main(){
 	listaVertices* grafo = CriarLista();
-
+	listaVertices* subgrafomaximal;
+	listaVertices* subgrafomaximo;
 	/*InsereVertice("a",1,grafo);
 	InsereVertice("b",2,grafo);
 	InsereVertice("c",3,grafo);
@@ -26,14 +27,23 @@ int main(){
 
 	/*OrdenaDescrescente(grafo);*/
 	InsereRegistrosLido(grafo);
+	printf("segmentation\n");
+	subgrafomaximo = getCliqueMaximo(grafo);
+	subgrafomaximal = getCliqueMaximal(grafo,5);
 	/*listaVertices* gr = getCliqueMaximal(grafo,49);*/
 
 	ImprimirGrafo(grafo);
+	printf("******CLIQUE MAXIMAL********\n");
+	ImprimirGrafo(subgrafomaximal);
+	printf("******CLIQUE MAXIMO*********\n");
+	ImprimirGrafo(subgrafomaximo);
 
 	//RemoveVertice(6,grafo);
 	//imprimirgrafo(grafo);
-	printf("vertice removido\n");
+	//printf("vertice removido\n");
 	ExcluirGrafo(grafo);
+	ExcluirGrafo(subgrafomaximal);
+	ExcluirGrafo(subgrafomaximo);
 	//ExcluirGrafo(gr);
 	if(ListaVazia(grafo) == 1){
 		printf("grafo vazio\n");
